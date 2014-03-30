@@ -1,11 +1,15 @@
 package com.chklab.apppass.app;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,6 +31,8 @@ import java.util.Map;
  */
 public class MyPassFragment extends Fragment {
 
+    private View v;
+    private Context context;
     private RequestQueue mQueue;
 
     @Override
@@ -35,9 +41,6 @@ public class MyPassFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
 
-        //ネットワークからデータを取得
-        getDate(inflater.getContext());
-
         //return inflater.inflate(R.layout.fragment1, container, false);
 
         //Button button = (Button)getActivity().findViewById(R.id.button1);
@@ -45,7 +48,10 @@ public class MyPassFragment extends Fragment {
 
         // 第３引数のbooleanは"container"にreturnするViewを追加するかどうか
         //trueにすると最終的なlayoutに再度、同じView groupが表示されてしまうのでfalseでOKらしい
-        View v = inflater.inflate(R.layout.fragment_mypass, container, false);
+        v = inflater.inflate(R.layout.fragment_mypass, container, false);
+        context = v.getContext();
+        //ネットワークからデータを取得
+        getDate();
 
         // ボタンを取得して、ClickListenerをセット
         //Button btn = (Button)v.findViewById(R.id.button1);
@@ -61,7 +67,7 @@ public class MyPassFragment extends Fragment {
         }
     };
 
-    private void getDate(Context context){
+    private void getDate(){
 
         //リクエストURL
         String url = context.getString(R.string.webapi_url);
@@ -75,7 +81,12 @@ public class MyPassFragment extends Fragment {
                         // JSONArrayのパース、List、Viewへの追加等
                         try {
                             String appPassNo = response.get("apppass_no").toString();
-                            JSONArray list = response.getJSONArray("");
+
+                            Resources r = context.getResources();
+                            Bitmap bmp = BitmapFactory.decodeResource(r, R.drawable.man);
+                            ImageView iv = (ImageView)v.findViewById(R.id.imagePerson);
+                            iv.setImageBitmap(bmp);
+                            //JSONArray list = response.getJSONArray("");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

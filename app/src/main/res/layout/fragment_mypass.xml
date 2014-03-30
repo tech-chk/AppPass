@@ -168,11 +168,12 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:id="@+id/imageView9"
-                android:src="@drawable/notstamp" />
+                android:id="@+id/imageCheckined"
+                android:src="@drawable/notstamp"
+                android:background="@drawable/notstamp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -180,11 +181,13 @@
                 android:layout_height="fill_parent">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="290dp"
+                    android:layout_height="match_parent"
                     android:id="@+id/textCheckin"
                     android:lines="2"
-                    android:text="ああああああ" />
+                    android:singleLine="false"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
             </LinearLayout>
 
         </TableRow>
@@ -211,29 +214,33 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:id="@+id/imageView2"
-            android:src="@drawable/notstamp" />
+            android:id="@+id/imageStamp1"
+            android:src="@drawable/notstamp"
+            android:background="@drawable/notstamp" />
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:id="@+id/imageView3"
-            android:src="@drawable/notstamp" />
+            android:id="@+id/imageStamp2"
+            android:src="@drawable/notstamp"
+            android:background="@drawable/notstamp" />
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:id="@+id/imageView4"
-            android:src="@drawable/notstamp" />
+            android:id="@+id/imageStamp3"
+            android:src="@drawable/notstamp"
+            android:background="@drawable/notstamp" />
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:id="@+id/imageView5"
-            android:src="@drawable/notstamp" />
+            android:id="@+id/imageStamp4"
+            android:src="@drawable/notstamp"
+            android:background="@drawable/notstamp" />
     </LinearLayout>
 
 </LinearLayout>

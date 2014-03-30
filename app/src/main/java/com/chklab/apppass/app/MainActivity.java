@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.chklab.apppass.app.models.UserInfo;
 
 import org.json.JSONArray;
 
@@ -57,6 +58,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TODO:ここでWebAPIからユーザー情報を取得して保存、今はとりあえず直値で
+        UserInfo userInfo = UserInfo.getInstance();
+        userInfo.setUserId("c6c1f6c8-1307-46e9-8e47-e77709521281");
+        userInfo.setSex("1");
+        userInfo.setBirthday("1983-3-21");
+        userInfo.setFirstName("Shimizu");
+        userInfo.setLastName("Noriaki");
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();

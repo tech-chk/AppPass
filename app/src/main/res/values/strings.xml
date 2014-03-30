@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AppPass</string>
+    <string name="title_section1">MyApp</string>
+    <string name="title_section2">フォロー</string>
+    <string name="title_section3">スポット</string>
+    <string name="title_section4">近く</string>
+    <string name="title_section5">設定</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

@@ -9,4 +9,10 @@
     <string name="title_section5">設定</string>
     <string name="action_settings">Settings</string>
 
+    <string name="webapi_url">http://192.168.3.2/rcrs.webapp.pub.apppass/api/</string>
+    <string name="webimage_url">設定</string>
+    <string name="webaccount_url">設定</string>
+    <string name="weblogin_url">設定</string>
+    <string name="webmanagelogin_url">設定</string>
+
 </resources>

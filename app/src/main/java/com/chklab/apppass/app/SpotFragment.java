@@ -1,13 +1,17 @@
 package com.chklab.apppass.app;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.android.volley.Request;
@@ -43,9 +47,10 @@ public class SpotFragment  extends Fragment {
     private Context context;
     private RequestQueue mQueue;
 
-    GridView gridView;
-    ArrayList<GridItem> gridArray = new ArrayList<GridItem>();
-    CustomGridViewAdapter customGridAdapter;
+    private JSONArray jsonArray;
+    private GridView gridView;
+    private ArrayList<GridItem> gridArray = new ArrayList<GridItem>();
+    private CustomGridViewAdapter customGridAdapter;
 
     @Override
     public View onCreateView(
@@ -62,6 +67,8 @@ public class SpotFragment  extends Fragment {
         //trueにすると最終的なlayoutに再度、同じView groupが表示されてしまうのでfalseでOKらしい
         v = inflater.inflate(R.layout.fragment_spot, container, false);
         context = v.getContext();
+
+        Activity a = getActivity();
 
         // ボタンを取得して、ClickListenerをセット
         //Button btn = (Button)v.findViewById(R.id.button1);
@@ -92,8 +99,7 @@ public class SpotFragment  extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override public void onResponse(JSONArray response) {
                         // レスポンス受け取り時の処理...
-                        int a = 0;
-
+                        jsonArray = response;
                         try {
 
                             for (int i = 0; i < response.length(); i++)
@@ -125,6 +131,26 @@ public class SpotFragment  extends Fragment {
                             gridView = (GridView)v.findViewById(R.id.gridView1);
                             customGridAdapter = new CustomGridViewAdapter(v.getContext(), R.layout.grid_imgtext, gridArray);
                             gridView.setAdapter(customGridAdapter);
+
+                            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    try
+                                    {
+                                        JSONObject json = jsonArray.getJSONObject(position);
+                                        String spotId = json.get("spotid").toString();
+
+                                        // インテントへのインスタンス生成
+                                        Intent intent = new Intent(context, SpotDetailActivity.class);
+                                        //　インテントに値をセット
+                                        intent.putExtra("SpotID", spotId);
+                                        // サブ画面の呼び出し
+                                        context.startActivity(intent);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();

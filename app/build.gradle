@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion '19.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -22,5 +22,6 @@ dependencies {
     compile 'com.android.support:support-v13:+'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.mcxiaoke.volley:library:1.0.+'
+    compile 'com.google.android.gms:play-services:+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

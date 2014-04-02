@@ -11,4 +11,12 @@
         android:text="spot"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <GridView
+        android:id="@+id/gridView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="1" >
+
+    </GridView>
+
 </LinearLayout>

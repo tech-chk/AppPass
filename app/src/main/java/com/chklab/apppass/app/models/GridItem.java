@@ -6,23 +6,23 @@ import android.graphics.Bitmap;
  * Created by 010144 on 14/03/25.
  */
 public class GridItem {
-    Bitmap image;
+    String imagePath;
     String date;
     String title;
     String sub;
 
-    public GridItem(Bitmap image, String date, String title, String sub) {
+    public GridItem(String imagePath, String date, String title, String sub) {
         super();
-        this.image = image;
+        this.imagePath = imagePath;
         this.date = date;
         this.title = title;
         this.sub = sub;
     }
-    public Bitmap getImage() {
-        return image;
+    public String getImage() {
+        return imagePath;
     }
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public void setImage(String imagePath) {
+        this.imagePath = imagePath;
     }
     public String getDate(){
         return date;

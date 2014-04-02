@@ -1,5 +1,7 @@
 package com.chklab.apppass.app;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,16 +10,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.chklab.apppass.app.models.CustomGridViewAdapter;
 import com.chklab.apppass.app.models.GridItem;
+import com.chklab.apppass.app.models.LruCacheSample;
+import com.chklab.apppass.app.models.UserInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by 010144 on 14/03/25.
  */
 public class FollowFragment extends Fragment {
+
+    private View v;
+    private Context context;
+    private RequestQueue mQueue;
 
     GridView gridView;
     ArrayList<GridItem> gridArray = new ArrayList<GridItem>();
@@ -37,18 +62,11 @@ public class FollowFragment extends Fragment {
 
         // 第３引数のbooleanは"container"にreturnするViewを追加するかどうか
         //trueにすると最終的なlayoutに再度、同じView groupが表示されてしまうのでfalseでOKらしい
-        View v = inflater.inflate(R.layout.fragment_follow, container, false);
+        v = inflater.inflate(R.layout.fragment_follow, container, false);
 
         // ボタンを取得して、ClickListenerをセット
         //Button btn = (Button)v.findViewById(R.id.button1);
         //btn.setOnClickListener(mClickListener);
-
-        Bitmap icon = BitmapFactory.decodeResource(v.getResources(), R.drawable.ic_launcher);
-        gridArray.add(new GridItem(icon, "2014年3月14日", "株式会社　地域科学研究所", "詳細"));
-
-        gridView = (GridView)v.findViewById(R.id.gridView1);
-        customGridAdapter = new CustomGridViewAdapter(v.getContext(), R.layout.grid_imgtext, gridArray);
-        gridView.setAdapter(customGridAdapter);
 
 
         return v;
@@ -60,4 +78,6 @@ public class FollowFragment extends Fragment {
             a++;
         }
     };
+
+
 }

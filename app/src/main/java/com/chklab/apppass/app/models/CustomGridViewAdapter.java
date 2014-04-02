@@ -9,6 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.chklab.apppass.app.R;
 
 import java.util.ArrayList;
@@ -42,7 +46,7 @@ public class CustomGridViewAdapter extends ArrayAdapter<GridItem> {
             holder.txtDate = (TextView) row.findViewById(R.id.item_text_date);
             holder.txtTitle = (TextView) row.findViewById(R.id.item_text_title);
             holder.txtSub = (TextView) row.findViewById(R.id.item_text_sub);
-            holder.imageItem = (ImageView) row.findViewById(R.id.item_image);
+            holder.imageItem = (NetworkImageView) row.findViewById(R.id.item_image);
             row.setTag(holder);
         } else {
             holder = (RecordHolder) row.getTag();
@@ -52,7 +56,15 @@ public class CustomGridViewAdapter extends ArrayAdapter<GridItem> {
         holder.txtDate.setText(item.getDate());
         holder.txtTitle.setText(item.getTitle());
         holder.txtSub.setText(item.getSub());
-        holder.imageItem.setImageBitmap(item.getImage());
+
+        String imagePath = item.getImage();
+        if (imagePath != null && imagePath != "")
+        {
+            RequestQueue queue = Volley.newRequestQueue(context);
+            holder.imageItem.setImageUrl(imagePath, new ImageLoader(queue, new LruCacheSample()));
+            holder.imageItem.setBackground(null);
+        }
+
         return row;
 
     }
@@ -61,7 +73,7 @@ public class CustomGridViewAdapter extends ArrayAdapter<GridItem> {
         TextView txtDate;
         TextView txtTitle;
         TextView txtSub;
-        ImageView imageItem;
+        com.android.volley.toolbox.NetworkImageView imageItem;
 
     }
 }

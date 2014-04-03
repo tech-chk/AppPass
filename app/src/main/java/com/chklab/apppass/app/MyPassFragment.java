@@ -110,11 +110,12 @@ public class MyPassFragment extends Fragment {
                             String formatBirth = formatB.format(dateBirth);
 
                             String sexFormatte = "";
-                            if (userInfo.getSex() == "1")
+                            int sex = Integer.valueOf(userInfo.getSex());
+                            if (sex == 1)
                             {
                                 sexFormatte = "M";
                             }
-                            else if (userInfo.getSex() =="2")
+                            else if (sex ==2)
                             {
                                 sexFormatte = "F";
                             }
@@ -138,11 +139,11 @@ public class MyPassFragment extends Fragment {
                             //ユーザー画像を表示
                             Bitmap bmp = null;
                             Resources r = context.getResources();
-                            if(userInfo.getSex() == "1")
+                            if(sex == 1)
                             {
                                 bmp = BitmapFactory.decodeResource(r, R.drawable.man);
                             }
-                            else if (userInfo.getSex() == "2")
+                            else if (sex == 2)
                             {
                                 bmp = BitmapFactory.decodeResource(r, R.drawable.woman);
                             }

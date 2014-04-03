@@ -1,6 +1,7 @@
 package com.chklab.apppass.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,8 +23,12 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.VisibleRegion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +43,7 @@ import java.util.Date;
  * Created by 010144 on 14/03/25.
  */
 public class NearFragment extends Fragment implements GooglePlayServicesClient.OnConnectionFailedListener,
-        LocationListener, GooglePlayServicesClient.ConnectionCallbacks {
+        LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GoogleMap.OnCameraChangeListener {
 
     private MainActivity activity = null;
 
@@ -83,8 +88,9 @@ public class NearFragment extends Fragment implements GooglePlayServicesClient.O
         {
             mMap = ((MapFragment)activity.getFragmentManager().findFragmentById(R.id.nearMap)).getMap();
             //mMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.nearMap)).getMap();
-
             mMap.setMyLocationEnabled(true);
+            // イベントハンドラの登録
+            mMap.setOnCameraChangeListener(this);
 
             mLocationClient = new LocationClient(context.getApplicationContext(), this, this); // ConnectionCallbacks, OnConnectionFailedListener
             if (mLocationClient != null) {
@@ -94,7 +100,7 @@ public class NearFragment extends Fragment implements GooglePlayServicesClient.O
         }
 
         //ピンを設置します。
-        //setPin();
+        setPin();
 
         return v;
     }
@@ -138,6 +144,20 @@ public class NearFragment extends Fragment implements GooglePlayServicesClient.O
     {
     }
 
+    @Override
+    public void onCameraChange(CameraPosition position) {
+        // カメラ位置変更時の処理を実装
+        Projection proj = mMap.getProjection();
+        VisibleRegion vRegion = proj.getVisibleRegion();
+        // 北東 = top/right, 南西 = bottom/left
+        double topLatitude = vRegion.latLngBounds.northeast.latitude;
+        double bottomLatitude = vRegion.latLngBounds.southwest.latitude;
+        double leftLongitude = vRegion.latLngBounds.southwest.longitude;
+        double rightLongitude = vRegion.latLngBounds.northeast.longitude;
+
+        //データ取得
+        setPin();
+    }
 
     /**
      * ネットワークからデータを取得します。
@@ -147,15 +167,21 @@ public class NearFragment extends Fragment implements GooglePlayServicesClient.O
         UserInfo userInfo = UserInfo.getInstance();
 
         //表示範囲の左上、右下の緯度経度を取得
-
+        Projection proj = mMap.getProjection();
+        VisibleRegion vRegion = proj.getVisibleRegion();
+        // 北東 = top/right, 南西 = bottom/left
+        double topLatitude = vRegion.latLngBounds.northeast.latitude;
+        double bottomLatitude = vRegion.latLngBounds.southwest.latitude;
+        double leftLongitude = vRegion.latLngBounds.southwest.longitude;
+        double rightLongitude = vRegion.latLngBounds.northeast.longitude;
 
         //リクエストURL
         String url = context.getString(R.string.webapi_url);
         url += "SpotApi";
-        url += "?lon1=";
-        url += "&lat1=";
-        url += "&lon2=";
-        url += "&lat2=";
+        url += "?lon1=" + leftLongitude;
+        url += "&lat1=" + topLatitude;
+        url += "&lon2=" + rightLongitude;
+        url += "&lat2=" + bottomLatitude;
         mQueue = Volley.newRequestQueue(context);
         mQueue.add(new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
@@ -168,32 +194,46 @@ public class NearFragment extends Fragment implements GooglePlayServicesClient.O
                             {
                                 JSONObject json = response.getJSONObject(i);
 
-                                String strDate = json.get("date").toString();
-                                String startTime = json.get("start_time").toString();
-                                String endTime = json.get("end_time").toString();
+                                String spotid = json.get("spotid").toString();
                                 String title = json.get("title").toString();
                                 String description = json.get("description").toString();
-                                String coverphotoUrl = json.get("coverphoto_url").toString();
+                                String lat = json.get("lat").toString();
+                                String lon = json.get("lon").toString();
 
-                                SimpleDateFormat formatA = new SimpleDateFormat("yyyy年MM月dd日");
-                                strDate = strDate.replaceAll("-","/");
-                                Date date = DateFormat.getDateInstance().parse(strDate);
-                                String formatDate = formatA.format(date);
-                                formatDate = formatDate + startTime + "～" + endTime;
-
-                                String imageurl = context.getString(R.string.webimage_url);
-
-                                String imagePath = "";
-                                if (coverphotoUrl != null && coverphotoUrl != ""){
-                                    imagePath = imageurl + coverphotoUrl;
-                                }
+                                // マーカー表示
+                                LatLng location = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
+                                MarkerOptions options = new MarkerOptions();
+                                options.position(location);
+                                options.title(spotid + ":" + title);
+                                options.snippet(description);
+                                options.draggable(false);//ドラッグ不可
+                                mMap.addMarker(options);
                             }
+
+                            // インフォウィンドウのタッチイベントハンドラ登録
+                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+
+                                    String idTitle = marker.getTitle();
+                                    String spotId = idTitle.substring(0, idTitle.indexOf(":"));
+
+                                    // インテントへのインスタンス生成
+                                    Intent intent = new Intent(context, SpotDetailActivity.class);
+                                    //　インテントに値をセット
+                                    intent.putExtra("SpotID", spotId);
+                                    // サブ画面の呼び出し
+                                    context.startActivity(intent);
+
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
                         }
+                        //catch (ParseException e) {
+                        //    e.printStackTrace();
+                        //}
                     }
                 },
                 new Response.ErrorListener() {

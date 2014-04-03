@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -50,6 +51,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     protected LocationManager locationManager;
     protected String bestProvider;
 
+    public static final String PREFERENCES_FILE_NAME = "preference";
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -70,13 +73,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO:ここでWebAPIからユーザー情報を取得して保存、今はとりあえず直値で
+        //プリファレンスからユーザー情報を取得
+        SharedPreferences settings = getSharedPreferences(PREFERENCES_FILE_NAME, 0); // 0 -> MODE_PRIVATE
         UserInfo userInfo = UserInfo.getInstance();
-        userInfo.setUserId("c6c1f6c8-1307-46e9-8e47-e77709521281");
-        userInfo.setSex("1");
-        userInfo.setBirthday("1983-3-21");
-        userInfo.setFirstName("Shimizu");
-        userInfo.setLastName("Noriaki");
+        userInfo.setUserId(settings.getString("userId",""));
+        userInfo.setSex(settings.getString("sex",""));
+        userInfo.setBirthday(settings.getString("birthDay",""));
+        userInfo.setFirstName(settings.getString("firstName",""));
+        userInfo.setLastName(settings.getString("lastName",""));
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();

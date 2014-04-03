@@ -1,0 +1,1 @@
+keytool -list -v -keystore "C:\!Users\01Develop\AS\apppass.keystore.jks" -alias apppass_key -storepass Serpens01 -keypass Serpens01

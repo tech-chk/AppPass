@@ -8,6 +8,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.provider.SyncStateContract;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -40,6 +44,11 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
+    private static NearFragment nearFragment = null;
+    private static View nearView = null;
+
+    protected LocationManager locationManager;
+    protected String bestProvider;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -104,6 +113,20 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         }
 
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        nearFragment.onPause();
+    }
+
 
 
     @Override
@@ -232,8 +255,16 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                 return v;
             }
             else if(index == 4){
-                v = new NearFragment().onCreateView(inflater, container, savedInstanceState);
-                return v;
+                //Fragmentに地図がのってる場合、何回もonCreateViewすると落ちる。
+                //なので一時対応 ↓
+                //なぜだー？？？
+                if(nearView == null)
+                {
+                    nearFragment = new NearFragment();
+                    nearView = nearFragment.onCreateView(inflater, container, savedInstanceState);
+                    //v = new NearFragment().onCreateView(inflater, container, savedInstanceState);
+                }
+                return nearView;
             }
             else if(index == 5){
                 v = new SettingsFragment().onCreateView(inflater, container, savedInstanceState);
@@ -255,5 +286,4 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         }
 
     }
-
 }

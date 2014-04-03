@@ -68,8 +68,6 @@ public class SpotFragment  extends Fragment {
         v = inflater.inflate(R.layout.fragment_spot, container, false);
         context = v.getContext();
 
-        Activity a = getActivity();
-
         // ボタンを取得して、ClickListenerをセット
         //Button btn = (Button)v.findViewById(R.id.button1);
         //btn.setOnClickListener(mClickListener);

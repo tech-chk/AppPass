@@ -28,7 +28,7 @@
                 <com.android.volley.toolbox.NetworkImageView
                     android:layout_width="256dp"
                     android:layout_height="128dp"
-                    android:id="@+id/imageStamp1"/>
+                    android:id="@+id/imageCoverPhoto"/>
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
@@ -50,24 +50,45 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="フォローする"
+                        android:id="@+id/btnFollow"
+                        android:layout_gravity="right" />
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="チェックイン"
+                        android:id="@+id/btnCheckin"
+                        android:layout_gravity="right" />
+
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="9999年99月99日"
-                    android:id="@+id/textDateOgExpiry" />
+                    android:id="@+id/textDate" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="タイトル"
-                    android:id="@+id/textDateOgExpiry" />
+                    android:id="@+id/textTitle" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="詳細"
-                    android:id="@+id/textDateOgExpiry" />
+                    android:id="@+id/textDetail" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,13 +100,13 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="住所"
-                    android:id="@+id/textDateOgExpiry" />
+                    android:id="@+id/textAddress" />
 
                 <fragment
                     android:id="@+id/map"
-                    android:layout_width="250dp"
-                    android:layout_height="150dp"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"/>
+                    class="com.google.android.gms.maps.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"/>
 
             </LinearLayout>
 
@@ -110,7 +131,7 @@
                 <com.android.volley.toolbox.NetworkImageView
                     android:layout_width="128dp"
                     android:layout_height="128dp"
-                    android:id="@+id/imageStamp1"/>
+                    android:id="@+id/imageStamp"/>
             </LinearLayout>
 
 

@@ -22,7 +22,7 @@
     <string name="title_activity_start">AppPass</string>
     -->
 
-    <!-- 清水自宅
+    <!-- 清水自宅 -->
     <string name="webapi_url">http://192.168.3.2/rcrs.webapp.pub.apppass/api/</string>
     <string name="webimage_url">http://192.168.3.2/rcrs.webapp.pub.apppass/</string>
     <string name="webaccount_url">http://192.168.3.2/rcrs.webapp.pub.Accounts/api/</string>
@@ -32,9 +32,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_login">ログイン</string>
     <string name="title_activity_start">AppPass</string>
-    -->
 
-    <!-- 本番 -->
+
+    <!-- 本番
     <string name="webapi_url">http://chklab01.cloudapp.net/apppass/api/</string>
     <string name="webimage_url">http://chklab01.cloudapp.net/apppass/</string>
     <string name="webaccount_url">http://chklab01.cloudapp.net/Accounts/api/</string>
@@ -44,5 +44,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_login">ログイン</string>
     <string name="title_activity_start">AppPass</string>
+-->
+    <!-- Messages -->
+    <string name="msg_ble_not_supported">Bluetooth-LE not supported.</string>
+    <string name="msg_bluetooth_not_supported">Bluetooth not supported.</string>
+    <string name="msg_beacon_monitoring_not_supported">Beacon-monitoring not supported.</string>
+    <string name="msg_beacon_ranging_not_supported">Beacon-ranging not supported.</string>
+    <string name="msg_monitor_in_bg">Monitor beacons in background.</string>
+    <string name="msg_no_condition_specfied">No condition is specified.</string>
+    <string name="msg_invoked_by_beacon">Invoked on Beacon event:\n</string>
 
 </resources>

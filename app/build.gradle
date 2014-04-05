@@ -23,5 +23,6 @@ dependencies {
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'com.google.android.gms:play-services:+'
+    compile files('src/main/libs/beaconsdk.jar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

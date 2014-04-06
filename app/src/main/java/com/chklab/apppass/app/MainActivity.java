@@ -199,7 +199,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
         final BeaconRegion region = TestData.getRegion("ALL");
         final String regionName = region.getIdentifier();
-
         mWatcher.startMonitoring(regionName);
         mWatcher.startRanging(regionName);
 
@@ -454,11 +453,76 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                     sb1.append(String.format("major=%d; minor=%d; proximity=%s\n", beacon.getMajor(),beacon.getMinor(),beacon.getProximity()));
                     Log.d("BeaconCheck",sb1.toString());
 
-                    if (beacon.getMajor() == 0 && beacon.getMinor() == 9) //お知らせ
+                    if (beacon.getMajor() == 1 && beacon.getMinor() == 9) //お知らせ
                     {
                         if (!isNews)
                         {
                             isNews = true;
+
+                            String uuid = beacon.getUuid().toString();
+                            String major = String.valueOf(beacon.getMajor());
+                            String minor = String.valueOf(beacon.getMinor());
+                            // インテントへのインスタンス生成
+                            Intent intent = new Intent(mainActivity, BeaconViewActivity.class);
+                            //　インテントに値をセット
+                            intent.putExtra("uuid", uuid);
+                            intent.putExtra("major", major);
+                            intent.putExtra("minor", minor);
+                            // サブ画面の呼び出し
+                            mainActivity.startActivity(intent);
+
+                            sendNotifecation();
+                        }
+                    }
+                    else if (beacon.getMajor() == 0 && beacon.getMinor() == 0) //ワークショップチェックイン
+                    {
+                        UserInfo userInfo = UserInfo.getInstance();
+                        int checkinSpotId = userInfo.getCheckinSpotId();
+
+                        if (checkinSpotId == -1) //チェックインしていないとき
+                        {
+                            //とりあえず仮のチェックインスポットIDを設定
+                            //チェックイン後正式なチェックインスポットIDがロードされるから大丈夫なはず
+                            userInfo.setCheckinSpotId(9999999);
+
+                            String uuid = beacon.getUuid().toString();
+                            String major = String.valueOf(beacon.getMajor());
+                            String minor = String.valueOf(beacon.getMinor());
+                            // インテントへのインスタンス生成
+                            Intent intent = new Intent(mainActivity, BeaconViewActivity.class);
+                            //　インテントに値をセット
+                            intent.putExtra("uuid", uuid);
+                            intent.putExtra("major", major);
+                            intent.putExtra("minor", minor);
+                            // サブ画面の呼び出し
+                            mainActivity.startActivity(intent);
+
+                            sendNotifecation();
+                        }
+                    }
+                    else if (beacon.getMajor() == 1 && beacon.getMinor() == 0) //宝さがしチェックイン
+                    {
+                        UserInfo userInfo = UserInfo.getInstance();
+                        int checkinSpotId = userInfo.getCheckinSpotId();
+
+                        if (checkinSpotId == -1) //チェックインしていないとき
+                        {
+                            //とりあえず仮のチェックインスポットIDを設定
+                            //チェックイン後正式なチェックインスポットIDがロードされるから大丈夫なはず
+                            userInfo.setCheckinSpotId(9999999);
+
+                            String uuid = beacon.getUuid().toString();
+                            String major = String.valueOf(beacon.getMajor());
+                            String minor = String.valueOf(beacon.getMinor());
+                            // インテントへのインスタンス生成
+                            Intent intent = new Intent(mainActivity, BeaconViewActivity.class);
+                            //　インテントに値をセット
+                            intent.putExtra("uuid", uuid);
+                            intent.putExtra("major", major);
+                            intent.putExtra("minor", minor);
+                            // サブ画面の呼び出し
+                            mainActivity.startActivity(intent);
+
                             sendNotifecation();
                         }
                     }

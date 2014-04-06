@@ -144,6 +144,7 @@ public class SpotDetailActivity extends Activity {
 
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
+        month++; //月は何故か0から始まるので+1する
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);

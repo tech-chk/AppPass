@@ -20,6 +20,7 @@ public class UserInfo {
     private String sex = "";
     private String userId = "";
     private String userName = "";
+    private int checkinSpotId = -1;
 
     /**
      *
@@ -116,4 +117,21 @@ public class UserInfo {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    /**
+     *
+     * @return
+     */
+    public int getCheckinSpotId() {
+        return checkinSpotId;
+    }
+
+    /**
+     *
+     * @param checkinSpotId
+     */
+    public void setCheckinSpotId(int checkinSpotId) {
+        this.checkinSpotId = checkinSpotId;
+    }
+
 }

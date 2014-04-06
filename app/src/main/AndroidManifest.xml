@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -14,14 +14,16 @@
         <!-- リリース -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCgssTCMeaJCJWCWmvEZCW1eGwahfo4OVM"/>
+            android:value="AIzaSyCgssTCMeaJCJWCWmvEZCW1eGwahfo4OVM" />
 
-        <!-- 清水会社
+        <!--
+        清水会社
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyC31ZYMB2MhJbz4UWgprmWp-JucvLJtV1g"/>
         -->
-        <!-- 清水自宅
+        <!--
+        清水自宅
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAIkRs7ldeXTjcTrWIXiBWXNQzyjAcF1hc" />
@@ -34,6 +36,7 @@
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -54,16 +57,32 @@
             -->
             <!-- push invoke by BgScanService on beacon detection -->
             <intent-filter>
-                <action android:name="com.aplixcorp.android.ble.beacon.INVOKE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+                <action android:name="com.aplixcorp.android.ble.beacon.INVOKE" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
-        <service android:stopWithTask="false" android:name="BgScanService" android:isolatedProcess="false"></service>
+
+        <service
+            android:name="com.chklab.apppass.app.BgScanService"
+            android:isolatedProcess="false"
+            android:stopWithTask="false" />
 
         <activity
             android:name="com.chklab.apppass.app.SpotDetailActivity"
             android:label="@string/title_activity_spot_detail" >
+        </activity>
+        <activity
+            android:name="com.chklab.apppass.app.BeaconViewActivity"
+            android:label="@string/title_activity_beacon_view" >
+        </activity>
+        <activity
+            android:name="com.chklab.apppass.app.TreasureActivity"
+            android:label="@string/title_activity_treasure" >
+        </activity>
+        <activity
+            android:name="com.chklab.apppass.app.CheckinSpotActivity"
+            android:label="@string/title_activity_checkin_spot" >
         </activity>
     </application>
 
@@ -73,9 +92,10 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />

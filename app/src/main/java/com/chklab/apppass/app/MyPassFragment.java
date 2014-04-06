@@ -1,6 +1,7 @@
 package com.chklab.apppass.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -64,17 +67,45 @@ public class MyPassFragment extends Fragment {
         //ネットワークからデータを取得
         getDate();
 
-        // ボタンを取得して、ClickListenerをセット
-        //Button btn = (Button)v.findViewById(R.id.button1);
-        //btn.setOnClickListener(mClickListener);
+        // チェックインを取得して、ClickListenerをセット
+        TableRow trCheckined = (TableRow)v.findViewById(R.id.trCheckined);
+        trCheckined.setOnClickListener(trCheckinedClickListener);
 
         return v;
     }
 
-    private View.OnClickListener mClickListener = new View.OnClickListener(){
+    /**
+     * チェックインをクリックしたとき
+     */
+    private View.OnClickListener trCheckinedClickListener = new View.OnClickListener(){
         public void onClick(View v){
-            int a = 0;
-            a++;
+            UserInfo userInfo = UserInfo.getInstance();
+            int checkinSpotId = userInfo.getCheckinSpotId();
+
+            if (checkinSpotId == 1) //宝探しイベント
+            {
+                // インテントへのインスタンス生成
+                Intent intent = new Intent(context, TreasureActivity.class);
+                //　インテントに値をセット
+                intent.putExtra("SpotID", String.valueOf(checkinSpotId));
+                // サブ画面の呼び出し
+                context.startActivity(intent);
+
+            }
+            else if (checkinSpotId > 1) //イベント
+            {
+                // インテントへのインスタンス生成
+                Intent intent = new Intent(context, CheckinSpotActivity.class);
+                //　インテントに値をセット
+                intent.putExtra("SpotID", String.valueOf(checkinSpotId));
+                // サブ画面の呼び出し
+                context.startActivity(intent);
+            }
+            else
+            {
+                Toast toast = Toast.makeText(context, "チェックイン中のスポットはありません。", Toast.LENGTH_LONG);
+                toast.show();
+            }
         }
     };
 
@@ -151,7 +182,7 @@ public class MyPassFragment extends Fragment {
                             iv.setImageBitmap(bmp);
 
                             //チェックイン情報
-                            Boolean isChecined = Boolean.getBoolean(response.get("ischeckined").toString());
+                            Boolean isChecined = Boolean.valueOf(response.get("ischeckined").toString());
                             if (isChecined)
                             {
                                 String checinTitle = response.get("checkin_title").toString();
@@ -168,10 +199,12 @@ public class MyPassFragment extends Fragment {
                                 }
 
                                 chekinSpotID = Integer.parseInt(response.get("checkin_spotid").toString());
+                                userInfo.setCheckinSpotId(chekinSpotID);
                             }
                             else
                             {
                                 chekinSpotID = -1;
+                                userInfo.setCheckinSpotId(chekinSpotID);
 
                                 TextView textCheckin = (TextView)v.findViewById(R.id.textCheckin);
                                 textCheckin.setText("チェックイン中のスポットはありません。");

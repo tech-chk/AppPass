@@ -16,18 +16,17 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCgssTCMeaJCJWCWmvEZCW1eGwahfo4OVM" />
 
-        <!--
-        清水会社
+        <!-- 清水会社
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyC31ZYMB2MhJbz4UWgprmWp-JucvLJtV1g"/>
-        -->
-        <!--
-        清水自宅
+-->
+        <!-- 清水自宅
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAIkRs7ldeXTjcTrWIXiBWXNQzyjAcF1hc" />
         -->
+
         <uses-library android:name="com.google.android.maps" />
 
         <activity

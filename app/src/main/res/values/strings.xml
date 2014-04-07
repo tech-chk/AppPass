@@ -9,8 +9,7 @@
     <string name="title_section5">設定</string>
     <string name="action_settings">Settings</string>
 
-    <!--
-    清水会社
+    <!-- 清水会社
     <string name="webapi_url">http://192.168.76.90/rcrs.webapp.pub.apppass/api/</string>
     <string name="webimage_url">http://192.168.76.90/rcrs.webapp.pub.apppass/</string>
     <string name="webaccount_url">http://192.168.76.90/rcrs.webapp.pub.Accounts/api/</string>
@@ -19,21 +18,20 @@
     -->
 
 
-    <!-- 清水自宅 -->
+    <!-- 清水自宅
     <string name="webapi_url">http://192.168.3.2/rcrs.webapp.pub.apppass/api/</string>
     <string name="webimage_url">http://192.168.3.2/rcrs.webapp.pub.apppass/</string>
     <string name="webaccount_url">http://192.168.3.2/rcrs.webapp.pub.Accounts/api/</string>
     <string name="weblogin_url">http://192.168.3.2/rcrs.webapp.pub.Accounts/account/register?appid=and-01-02</string>
     <string name="webmanagelogin_url">http://192.168.3.2/rcrs.webapp.pub.Accounts/account/Manage</string>
-
-    <!--
-    本番
+-->
+    <!-- 本番 -->
     <string name="webapi_url">http://chklab01.cloudapp.net/apppass/api/</string>
     <string name="webimage_url">http://chklab01.cloudapp.net/apppass/</string>
     <string name="webaccount_url">http://chklab01.cloudapp.net/Accounts/api/</string>
     <string name="weblogin_url">http://chklab01.cloudapp.net/Accounts/account/register?appid=and-01-02</string>
     <string name="webmanagelogin_url">http://chklab01.cloudapp.net/Accounts/account/Manage</string>
-    -->
+
 
 
     <!-- Messages -->
